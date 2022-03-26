@@ -23,19 +23,22 @@ class RecycleAdapter: RecyclerView.Adapter<RecycleAdapter.ViewHolder>() {
 
     private val running = arrayOf("1hr 46mins", "2hrs 55mins", "2hrs 2mins", "1hr 48mins")
 
+    private var posts = arrayOf("0", "0", "0", "0")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleAdapter.ViewHolder {
        var view = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecycleAdapter.ViewHolder, position: Int) {
+
         holder.itemTitle.text = title[position]
         holder.itemDetail.text = details[position]
         holder.starring.text = starring[position]
         holder.running.text = running[position]
         holder.itemImage.setImageResource(images[position])
         holder.imageParental.setImageResource(imageParental[position])
-
+        holder.numSeats.text = posts[position]
 
     }
 
@@ -44,12 +47,17 @@ class RecycleAdapter: RecyclerView.Adapter<RecycleAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
         var itemImage: ImageView
         var imageParental: ImageView
         var itemTitle: TextView
         var itemDetail: TextView
         var starring: TextView
         var running: TextView
+        var minusImg: ImageView
+        var plusImg: ImageView
+        var numSeats: TextView
+
 
 
         init {
@@ -59,14 +67,36 @@ class RecycleAdapter: RecyclerView.Adapter<RecycleAdapter.ViewHolder>() {
             imageParental = itemView.findViewById(R.id.item_parental_control)
             starring = itemView.findViewById(R.id.item_starring)
             running = itemView.findViewById(R.id.item_run_time)
+            plusImg = itemView.findViewById(R.id.item_plus)
+            minusImg = itemView.findViewById(R.id.item_minus)
+            numSeats = itemView.findViewById(R.id.item_seats_num)
 
-            itemView.setOnClickListener {
+
+                itemView.setOnClickListener {
                 val position: Int = adapterPosition
 
                 Toast.makeText(itemView.context, "${title[position]}", Toast.LENGTH_LONG).show()
+
             }
+
+            plusImg.setOnClickListener {
+                var sum: Int = 0
+                sum++
+                numSeats.text = sum.toString()
+
+            }
+
+            minusImg.setOnClickListener {
+                var sub: Int = 0
+                sub--
+                numSeats.text = sub.toString()
+
+            }
+
+
         }
     }
-
-
 }
+
+
+
